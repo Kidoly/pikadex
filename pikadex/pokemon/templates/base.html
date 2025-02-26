@@ -1,0 +1,57 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{% block title %}Pokédex{% endblock %}</title>
+		<link rel="icon" type="image/png" href="{% static 'favicon.ico' %}">
+		{% tailwind_css %}
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	</head>
+<body class="bg-gray-100">
+
+    <!-- Barre de recherche avec autocomplétion -->
+    <div class="relative w-full max-w-lg mx-auto my-6">
+        <input type="text" id="search-input" class="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300" placeholder="Rechercher un Pokémon...">
+        <div id="autocomplete-results" class="absolute w-full bg-white border border-gray-300 rounded-lg mt-1 hidden shadow-lg z-50"></div>
+    </div>
+
+    {% block content %}{% endblock %}
+
+    <script>
+        $(document).ready(function() {
+            $("#search-input").on("input", function() {
+                let query = $(this).val();
+                if (query.length > 1) {
+                    $.ajax({
+                        url: "{% url 'autocomplete_pokemon' %}",
+                        data: {'q': query},
+                        dataType: "json",
+                        success: function(data) {
+                            let resultsDiv = $("#autocomplete-results");
+                            resultsDiv.empty().removeClass("hidden");
+                            if (data.length > 0) {
+                                data.forEach(pokemon => {
+                                    resultsDiv.append(
+                                        `<a href="/pokemon/${pokemon.id}/" class="flex items-center p-2 hover:bg-gray-200">
+                                            <img src="${pokemon.image}" class="w-10 h-10 mr-2">
+                                            <span>${pokemon.name}</span>
+                                        </a>`
+                                    );
+                                });
+                            } else {
+                                resultsDiv.append("<p class='p-2 text-gray-500'>Aucun Pokémon trouvé</p>");
+                            }
+                        }
+                    });
+                } else {
+                    $("#autocomplete-results").addClass("hidden");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

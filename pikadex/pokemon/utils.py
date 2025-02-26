@@ -49,3 +49,18 @@ def pokemon_creation(identifier):
         )
     return None
 
+def search_pokemon(query):
+    """ Returns a list of matching Pokémon names and images based on user input. """
+    response = requests.get("https://pokeapi.co/api/v2/pokemon?limit=151")  
+    if response.status_code == 200:
+        data = response.json()
+        matched_pokemons = [
+            {
+                "id": i + 1,
+                "name": p["name"].capitalize(),
+                "image": pokemon_creation(p["name"]).image
+            }
+            for i, p in enumerate(data["results"]) if query.lower() in p["name"]
+        ]
+        return matched_pokemons
+    return []

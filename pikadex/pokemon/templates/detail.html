@@ -1,34 +1,43 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ pokemon.name|capfirst }}</title>
-</head>
-<body>
-    <h1>{{ pokemon.name|capfirst }} (#{{ pokemon.id }})</h1>
-    <img src="{{ pokemon.image }}" alt="{{ pokemon.name }}">
-    <p>Height: {{ pokemon.height }} m</p>
-    <p>Weight: {{ pokemon.weight }} kg</p>
+{% extends "base.html" %}
 
-    <h2>Types</h2>
-    <ul>
+{% block title %}{{ pokemon.name|capfirst }}{% endblock %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-2xl shadow-lg max-w-lg w-full mx-auto">
+    <h1 class="text-2xl font-bold text-center mb-4">{{ pokemon.name|capfirst }} (#{{ pokemon.id }})</h1>
+    <div class="flex justify-center">
+        <img src="{{ pokemon.image }}" alt="{{ pokemon.name }}" class="w-40 h-40 object-contain">
+    </div>
+    <div class="grid grid-cols-2 gap-4 mt-4 text-center">
+        <div class="bg-gray-200 p-2 rounded-lg">Height: {{ pokemon.height }} m</div>
+        <div class="bg-gray-200 p-2 rounded-lg">Weight: {{ pokemon.weight }} kg</div>
+    </div>
+
+    <h2 class="text-lg font-semibold mt-4">Types</h2>
+    <div class="flex flex-wrap gap-2 mt-2">
         {% for type in pokemon.types %}
-            <li>{{ type.name|capfirst }}</li>
+            <span class="bg-blue-200 text-blue-800 px-3 py-1 rounded-lg">{{ type.name|capfirst }}</span>
         {% endfor %}
-    </ul>
+    </div>
 
-    <h2>Abilities</h2>
-    <ul>
+    <h2 class="text-lg font-semibold mt-4">Abilities</h2>
+    <ul class="list-disc pl-5 mt-2">
         {% for ability in pokemon.abilities %}
-            <li>{{ ability.name|capfirst }}</li>
+            <li class="text-gray-700">{{ ability.name|capfirst }}</li>
         {% endfor %}
     </ul>
 
-    <h2>Stats</h2>
-    <ul>
+    <h2 class="text-lg font-semibold mt-4">Stats</h2>
+    <ul class="list-disc pl-5 mt-2">
         {% for stat in pokemon.stats %}
-            <li>{{ stat.name|capfirst }}: {{ stat.base_stat }}</li>
+            <li class="text-gray-700">{{ stat.name|capfirst }}: {{ stat.base_stat }}</li>
         {% endfor %}
     </ul>
 
-</body>
-</html>
+    <div class="flex justify-between mt-6">
+        <a href="/pokemon/{{ pokemon.id|add:'-1' }}/" class="px-4 py-2 bg-gray-300 rounded-lg shadow-md">&#9665; Précédent</a>
+        <a href="/" class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md">🏠 Home</a>
+        <a href="/pokemon/{{ pokemon.id|add:'1' }}/" class="px-4 py-2 bg-gray-300 rounded-lg shadow-md">Suivant &#9655;</a>
+    </div>
+</div>
+{% endblock %}
