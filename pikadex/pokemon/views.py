@@ -7,6 +7,16 @@ import uuid
 TEAMS = {}
 
 def pokemon_view(request, pokemon_id):
+    """
+    Fonction qui affiche les détails d'un pokémon
+
+    Args:
+        request (HttpRequest): Requête HTTP avec des données de session (si il y en a)
+        pokemon_id (int): ID du pokémon
+    
+    Returns:
+        HttpResponse: Page HTML avec les détails du pokémon
+    """
     if "user_token" not in request.session:
         request.session["user_token"] = str(uuid.uuid4())
 
@@ -20,8 +30,10 @@ def pokemon_view(request, pokemon_id):
 
     return render(request, "detail.html", {"pokemon": pokemon, "team": team, "user_token": user_token})
 
-
 def autocomplete_pokemon(request):
+    """
+    Fonction qui renvoie une liste de pokémons correspondant à la recherche
+    """
     query = request.GET.get('q', '')
     if query:
         matched_pokemons = search_pokemon(query)
@@ -29,6 +41,15 @@ def autocomplete_pokemon(request):
     return JsonResponse([], safe=False)
 
 def pokemon_list(request):
+    """
+    Fonction qui affiche la liste des pokémons
+
+    Args:
+        request (HttpRequest): Requête HTTP avec des données de session (si il y en a)
+
+    Returns:
+        HttpResponse: Page HTML avec la liste des pokémons et l'équipe du joueur
+    """
     if "user_token" not in request.session:
         request.session["user_token"] = str(uuid.uuid4())
 
@@ -42,6 +63,15 @@ def pokemon_list(request):
 
 
 def add_pokemon(request):
+    """
+    Fonction qui ajoute un pokémon à l'équipe du joueur
+
+    Args:
+        request (HttpRequest): Requête HTTP avec les données du pokémon à ajouter et le token du joueur
+
+    Returns:
+        HttpResponse: Redirige vers la page de la liste des pokémons (et ajoute le pokémon à l'équipe si il y a de la place)
+    """
     token = request.POST.get('token')
     pokemon_id = request.POST.get('pokemon_id')
 
@@ -59,6 +89,15 @@ def add_pokemon(request):
     return redirect('/pokemon/') 
 
 def remove_pokemon(request):
+    """
+    Fonction qui retire un pokémon de l'équipe du joueur
+
+    Args:
+        request (HttpRequest): Requête HTTP avec les données du pokémon à retirer et le token du joueur
+
+    Returns:
+        HttpResponse: Redirige vers la page de la liste des pokémons (et retire le pokémon de l'équipe si il y est)
+    """
     token = request.POST.get('token')
     pokemon_id = request.POST.get('pokemon_id')
 
@@ -76,7 +115,16 @@ def remove_pokemon(request):
 
     return redirect('/pokemon/')
 
-def get_team(request, token):
+def get_team(token):
+    """
+    Fonction qui renvoie l'équipe du joueur
+
+    Args:
+        token (str): Token du joueur
+    
+    Returns:
+        JsonResponse: Liste des pokémons de l'équipe du joueur
+    """
     team = TEAMS.get(token, [])
     return JsonResponse({"team": team})
 

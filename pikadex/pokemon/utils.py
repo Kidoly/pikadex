@@ -2,6 +2,7 @@ import requests
 
 pokeApiUrl = "https://pokeapi.co/api/v2/pokemon/"
 
+# Classes pour stocker les données des pokémons
 class Pokemon():
     def __init__(self, name, id, image, height, weight, types, abilities, stats):
         self.name = name
@@ -34,6 +35,15 @@ class Type():
         self.url = url
 
 def pokemon_creation(identifier):
+    """
+    Fonction qui initialise un objet Pokemon avec les données récupérées de l'API
+
+    Args:
+        identifier (str): Nom ou ID du pokémon
+
+    Returns:
+        Pokemon (class): Objet Pokemon
+    """
     response = requests.get(f"{pokeApiUrl}{identifier}")
     if response.status_code == 200:
         data = response.json()
@@ -49,8 +59,18 @@ def pokemon_creation(identifier):
         )
     return None
 
+
+# 
 def search_pokemon(query):
-    """ Returns a list of matching Pokémon names and images based on user input. """
+    """
+    Fonction pour chercher un pokémon par son nom 
+    
+    Args:
+        query (str): Nom ou bout du nom du pokémon à chercher
+
+    Returns:
+        matched_pokemons (list) : Liste des pokémons correspondant à la recherche
+    """
     response = requests.get("https://pokeapi.co/api/v2/pokemon?limit=151")  
     if response.status_code == 200:
         data = response.json()
@@ -68,6 +88,15 @@ def search_pokemon(query):
 
 # Flemme de faire une pagination, on va créer l'url des images directement
 def get_pokemons():
+    """
+    Fonction pour récupérer les données des 151 premiers pokémons
+
+    Args:
+        None
+
+    Returns:
+        pokemons (list) : Liste des pokémons avec leur id, nom et image(lien)
+    """
     response = requests.get(f"{pokeApiUrl}?limit=151")
     if response.status_code == 200:
         data = response.json()
@@ -80,5 +109,3 @@ def get_pokemons():
     else:
         print(f"Erreur {response.status_code}: Impossible de récupérer les données")
         return []
-
-
