@@ -1,3 +1,5 @@
+Groupe : Alban MARY, Titouan PAUCHET, Clément BATARD, Kévin CALLAUD
+
 # Pikadex
 
 Pikadex - Projet Python utilisant le framework Django
