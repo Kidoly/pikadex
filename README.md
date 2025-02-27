@@ -72,9 +72,11 @@ python manage.py runserver
 http://127.0.0.1:8000/pokemon/
 ```
 
-Utilisation : 
-    1. Page d'acceuil :
-        - Permet de parcourir les pokemons et de les ajouter a son équipe.
-       
-    2. Page des détails :
-        - Affiche les détails d'un pokemon avec ses stats, ses capacitées et ses types.
+## Utilisation
+
+- **Page d'accueil** :  
+  Explorez la liste des Pokémon et ajoutez-les à votre équipe.
+
+- **Page des détails** :  
+  Consultez les caractéristiques d’un Pokémon : stats, capacités et types.
+
