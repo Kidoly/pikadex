@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .utils import pokemon_creation, search_pokemon
+from .utils import pokemon_creation, search_pokemon, get_pokemons
 from django.http import JsonResponse
 
 def pokemon_view(request, pokemon_id):
@@ -15,3 +15,8 @@ def autocomplete_pokemon(request):
         matched_pokemons = search_pokemon(query)
         return JsonResponse(matched_pokemons, safe=False)
     return JsonResponse([], safe=False)
+
+def pokemon_list(request):
+    pokemons = get_pokemons()
+    print(pokemons)
+    return render(request, 'home.html', {'pokemons': pokemons})

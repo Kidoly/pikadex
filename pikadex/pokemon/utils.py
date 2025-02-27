@@ -64,3 +64,21 @@ def search_pokemon(query):
         ]
         return matched_pokemons
     return []
+
+
+# Flemme de faire une pagination, on va créer l'url des images directement
+def get_pokemons():
+    response = requests.get(f"{pokeApiUrl}?limit=151")
+    if response.status_code == 200:
+        data = response.json()
+        pokemons = []
+        nb=0
+        for pokemon in data["results"]:
+            nb+=1
+            pokemons.append([nb, pokemon["name"].capitalize(), f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{nb}.png"])
+        return pokemons
+    else:
+        print(f"Erreur {response.status_code}: Impossible de récupérer les données")
+        return []
+
+

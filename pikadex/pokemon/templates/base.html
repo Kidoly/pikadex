@@ -24,7 +24,7 @@
         $(document).ready(function() {
             $("#search-input").on("input", function() {
                 let query = $(this).val();
-                if (query.length > 1) {
+                if (query.length > 0) {
                     $.ajax({
                         url: "{% url 'autocomplete_pokemon' %}",
                         data: {'q': query},
