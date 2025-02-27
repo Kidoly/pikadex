@@ -5,8 +5,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Titre de la page -->
 		<title>{% block title %}Pokédex{% endblock %}</title>
 		<link rel="icon" type="image/png" href="{% static 'favicon.ico' %}">
+        <!-- Tailwind CSS -->
 		{% tailwind_css %}
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	</head>
@@ -17,10 +19,13 @@
         <input type="text" id="search-input" class="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300" placeholder="Rechercher un Pokémon...">
         <div id="autocomplete-results" class="absolute w-full bg-white border border-gray-300 rounded-lg mt-1 hidden shadow-lg z-50"></div>
     </div>
+
+    <!-- Contenu de la page -->
     <div>
         {% block content %}{% endblock %}
     </div>
-
+    
+    <!-- Bloc de l'équipe -->
     <div class="w-64 bg-white shadow-lg rounded-lg p-4 fixed right-4 top-20">
         <h2 class="text-xl font-semibold mb-3">Mon Équipe</h2>
         <ul id="team-list">
@@ -31,7 +36,7 @@
                 <form action="{% url 'remove_pokemon' %}" method="post">
                     {% csrf_token %}
                     <input type="hidden" name="pokemon_id" value="{{ pokemon.id }}">
-                    <input type="hidden" name="token" value="{{ user_token }}">  <!-- Add this line -->
+                    <input type="hidden" name="token" value="{{ user_token }}">
                     <button type="submit" class="text-red-500 hover:text-red-700 text-sm">❌</button>
                 </form>                
             </li>
@@ -41,6 +46,7 @@
         </ul>
     </div>
 
+    <!-- Script pour l'autocomplétion -->
     <script>
         $(document).ready(function() {
             $("#search-input").on("input", function() {

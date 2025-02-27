@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
+<!-- Nom du pokemon dans le titre -->
 {% block title %}{{ pokemon.name|capfirst }}{% endblock %}
 
 {% block content %}
+<!-- Page du pokemon -->
 <div class="bg-white p-6 rounded-2xl shadow-lg max-w-lg w-full mx-auto">
     <h1 class="text-2xl font-bold text-center mb-4">{{ pokemon.name|capfirst }} (#{{ pokemon.id }})
         <form action="/pokemon/add_to_team/" method="post">
@@ -12,6 +14,7 @@
             <button type="submit" class="mt-2 bg-blue-500 hover:bg-blue-300 text-white px-4 py-2 rounded-lg shadow-md z-10">+</button>
         </form>
     </h1>
+    <!-- Image -->
     <div class="flex justify-center">
         <img src="{{ pokemon.image }}" alt="{{ pokemon.name }}" class="w-40 h-40 object-contain">
     </div>
@@ -20,6 +23,7 @@
         <div class="bg-gray-200 p-2 rounded-lg">Weight: {{ pokemon.weight }} kg</div>
     </div>
 
+    <!-- Types du pokemon -->
     <h2 class="text-lg font-semibold mt-4">Types</h2>
     <div class="flex flex-wrap gap-2 mt-2">
         {% for type in pokemon.types %}
@@ -27,6 +31,7 @@
         {% endfor %}
     </div>
 
+    <!-- Pouvoirs du pokemon -->
     <h2 class="text-lg font-semibold mt-4">Abilities</h2>
     <ul class="list-disc pl-5 mt-2">
         {% for ability in pokemon.abilities %}
@@ -34,6 +39,7 @@
         {% endfor %}
     </ul>
 
+    <!-- Stats du pokemon -->
     <h2 class="text-lg font-semibold mt-4">Stats</h2>
     <ul class="list-disc pl-5 mt-2">
         {% for stat in pokemon.stats %}
@@ -41,7 +47,7 @@
         {% endfor %}
     </ul>
 
-
+    <!-- Boutons de navigation -->
     <div class="flex justify-between mt-6">
         <a href="/pokemon/{{ pokemon.id|add:'-1' }}/" class="px-4 py-2 bg-gray-300 rounded-lg shadow-md">&#9665; Précédent</a>
         <a href="/pokemon/" class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md">🏠 Home</a>
