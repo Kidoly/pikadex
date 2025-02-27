@@ -4,11 +4,18 @@
 
 {% block content %}
 <div class="container mx-auto py-10 px-6 lg:px-20">
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-8">
         {% for pokemon in pokemons %}
-        <a href="/pokemon/{{ pokemon.0 }}/" class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition flex flex-col items-center">
+        <a href="/pokemon/{{ pokemon.0 }}/" class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition flex flex-col items-center h-4/5">
             <img src="{{ pokemon.2 }}" alt="{{ pokemon.1 }}" class="w-28 h-28 object-contain lazy-load" loading="lazy">
             <span class="mt-3 font-semibold text-lg">{{ pokemon.1 }}</span>
+            <!-- Add to the team -->
+            <form action="/pokemon/add_to_team/" method="post" class="relative left-[45%] bottom-[115%]">
+                {% csrf_token %}
+                <input type="hidden" name="pokemon_id" value="{{ pokemon.0 }}">
+                <input type="hidden" name="token" value="{{ user_token }}">
+                <button type="submit" class="mt-2 bg-blue-500 hover:bg-blue-300 text-white px-4 py-2 rounded-lg shadow-md z-10">+</button>
+            </form>
         </a>
         {% endfor %}
     </div>

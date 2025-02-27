@@ -4,7 +4,14 @@
 
 {% block content %}
 <div class="bg-white p-6 rounded-2xl shadow-lg max-w-lg w-full mx-auto">
-    <h1 class="text-2xl font-bold text-center mb-4">{{ pokemon.name|capfirst }} (#{{ pokemon.id }})</h1>
+    <h1 class="text-2xl font-bold text-center mb-4">{{ pokemon.name|capfirst }} (#{{ pokemon.id }})
+        <form action="/pokemon/add_to_team/" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="pokemon_id" value="{{ pokemon.id }}">
+            <input type="hidden" name="token" value="{{ user_token }}">
+            <button type="submit" class="mt-2 bg-blue-500 hover:bg-blue-300 text-white px-4 py-2 rounded-lg shadow-md z-10">+</button>
+        </form>
+    </h1>
     <div class="flex justify-center">
         <img src="{{ pokemon.image }}" alt="{{ pokemon.name }}" class="w-40 h-40 object-contain">
     </div>
@@ -33,6 +40,7 @@
             <li class="text-gray-700">{{ stat.name|capfirst }}: {{ stat.base_stat }}</li>
         {% endfor %}
     </ul>
+
 
     <div class="flex justify-between mt-6">
         <a href="/pokemon/{{ pokemon.id|add:'-1' }}/" class="px-4 py-2 bg-gray-300 rounded-lg shadow-md">&#9665; Précédent</a>

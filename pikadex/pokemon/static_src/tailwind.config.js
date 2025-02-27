@@ -42,7 +42,12 @@ module.exports = {
         // '../../**/*.py'
     ],
     theme: {
-        extend: {},
+        extend: {
+            inset: {
+                '115%': '115%',
+                '45%': '45%',
+              },
+        },
     },
     plugins: [
         /**
