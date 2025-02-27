@@ -5,8 +5,7 @@ Pikadex - Projet Python utilisant le framework Django
 
 ## Description
 
-Ce projet est une application web construite avec Django et permet d'afficher les 151 premiers pokemon.
-Ainsi que de rechercher et afficher les caractéristiques d'un pokemon en particulier et de creer des équipes.
+Ce projet est une application web construite avec Django et permet d'afficher les 151 premiers pokemon. Il permet également de rechercher et afficher les caractéristiques d'un pokemon en particulier et de creer des équipes.
 
 ## Détails techniques
 
